@@ -5,6 +5,7 @@
   "author": "Mixmax <hello@mixmax.com>",
   "license": "MIT",
   "dependencies": {
+    "@types/request-promise-native": "^1.0.10",
     "bee-queue": "^1.0.0",
     "body-parser": "^1.17.2",
     "bull": "^3.0.0-rc.2",
@@ -13,7 +14,9 @@
     "handlebars": "^4.0.10",
     "handlebars-helpers": "^0.8.2",
     "lodash": "^4.17.4",
-    "nodemon": "^1.11.0"
+    "nodemon": "^1.11.0",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5"
   },
   "scripts": {
     "start": "node index.js",

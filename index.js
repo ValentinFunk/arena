@@ -3,20 +3,23 @@ const path = require('path');
 const Arena = require('./src/server/app');
 const routes = require('./src/server/views/routes');
 const RedisClient = require('redis').RedisClient;
+const request = require('request-promise-native');
+
+const API_URL = process.env.API_URL;
+const API_KEY = process.env.API_KEY;
+const REDIS_HOST = process.env.REDIS_HOST;
+const REDIS_PORT = process.env.REDIS_PORT;
+const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
 
 const redis = {
-  host: process.env.REDIS_HOST,
-  port: parseInt(process.env.REDIS_PORT),
-  password: process.env.REDIS_PASSWORD,
+  host: REDIS_HOST,
+  port: parseInt(REDIS_PORT),
+  password: REDIS_PASSWORD,
   retry_strategy: function (options) {
     if (options.total_retry_time > 1000 * 60 * 60) {
       // End reconnecting after a specific timeout and flush all commands
       // with a individual error
       return new Error('Retry time exhausted');
-    }
-    if (options.attempt > 10) {
-      // End reconnecting with built in error
-      return undefined;
     }
     // reconnect after
     return Math.min(options.attempt * 100, 3000);
@@ -26,14 +29,22 @@ const redis = {
 function run(config, listenOpts = {}) {
   const {app, Queues} = Arena();
 
-  Queues.setConfig({
-    queues: [{
-      type: 'bee',
-      name: process.env.QUEUE_NAME,
-      url: redis,
-      hostId: 'k8s'
-    }]
-  });
+  setInterval(() => {
+    request(`${API_URL}/deployer/queues`, {qs: {
+      apiKey: API_KEY
+    }}).then(queues => {
+      const queues = queues.map(name => ({
+        type: 'bee',
+        name,
+        url: redis,
+        hostId: 'k8s'
+      }));
+
+      Queues.setConfig({
+        queues
+      });
+    });
+  }, 1000);
  
   app.locals.basePath = listenOpts.basePath || app.locals.basePath;
 
