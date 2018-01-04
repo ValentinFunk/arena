@@ -10,6 +10,7 @@ const API_KEY = process.env.API_KEY;
 const REDIS_HOST = process.env.REDIS_HOST;
 const REDIS_PORT = process.env.REDIS_PORT;
 const REDIS_PASSWORD = process.env.REDIS_PASSWORD;
+const PATH_PREFIX = process.env.PATH_PREFIX;
 
 const redis = {
   host: REDIS_HOST,
@@ -59,6 +60,6 @@ function run(config, listenOpts = {}) {
   return app;
 }
 
-if (require.main === module) run();
+if (require.main === module) run({basePath: PATH_PREFIX});
 
 module.exports = run;
