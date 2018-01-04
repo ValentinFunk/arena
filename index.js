@@ -33,8 +33,8 @@ function run(config, listenOpts = {}) {
   setInterval(() => {
     request(`${API_URL}/deployer/queues`, {qs: {
       apiKey: API_KEY
-    }}).then(queues => {
-      const queues = queues.map(name => ({
+    }}).then(queueNames => {
+      const queues = queueNames.map(name => ({
         type: 'bee',
         name,
         url: redis,
