@@ -61,6 +61,6 @@ function run(config, listenOpts = {}) {
   return app;
 }
 
-if (require.main === module) run({basePath: PATH_PREFIX});
+if (require.main === module) run(null, {basePath: PATH_PREFIX});
 
 module.exports = run;
