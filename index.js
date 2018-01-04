@@ -32,9 +32,8 @@ function run(config, listenOpts = {}) {
 
   setInterval(() => {
     request(`${API_URL}/deployer/queues`, {qs: {
-      apiKey: API_KEY,
-      json: true
-    }}).then(queueNames => {
+      apiKey: API_KEY
+    }, json: true}).then(queueNames => {
       const queues = queueNames.map(name => ({
         type: 'bee',
         name,
