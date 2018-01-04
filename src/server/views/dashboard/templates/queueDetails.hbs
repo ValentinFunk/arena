@@ -1,0 +1,36 @@
+<h2>Queue <code>{{ queueHost }}/{{ queueName }}</code></h2>
+
+<h3>Job Types</h3>
+<div class="row">
+  <div class="col-sm-4 no-padding">
+    <ul class="list-group">
+      {{#each jobCounts}}
+        <li class="list-group-item">
+          <span class="badge">{{ this }}</span>
+          <a href="{{ ../basePath }}/{{ encodeURI ../queueHost }}/{{ encodeURI ../queueName }}/{{ @key }}">
+            <span class="text-capitalize">{{ @key }}</span>
+          </a>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+<h3>Redis Statistics</h3>
+<div class="row">
+  <div class="col-sm-4 no-padding">
+    <table class="table">
+      {{#each stats}}
+        <tr>
+          <th>{{ @key }}</th>
+          <th>{{ this }}</th>
+        </tr>
+      {{/each}}
+    </table>
+  </div>
+</div>
+
+{{#contentFor 'sidebar'}}
+  <li><a href="{{ basePath }}/">Queues Overview</a></li>
+  <li class="active"><a href="#">Queue <code>{{ queueHost }}/{{ queueName }}</code></a></li>
+{{/contentFor}}

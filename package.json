@@ -1,0 +1,27 @@
+{
+  "name": "bull-arena",
+  "description": "An interactive UI dashboard for Bee Queue",
+  "main": "index.js",
+  "author": "Mixmax <hello@mixmax.com>",
+  "license": "MIT",
+  "dependencies": {
+    "bee-queue": "^1.0.0",
+    "body-parser": "^1.17.2",
+    "bull": "^3.0.0-rc.2",
+    "express": "^4.15.2",
+    "express-handlebars": "^3.0.0",
+    "handlebars": "^4.0.10",
+    "handlebars-helpers": "^0.8.2",
+    "lodash": "^4.17.4",
+    "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "inspect": "nodemon --inspect --trace-warnings index.js"
+  },
+  "engines": {
+    "node": ">=7.6.0"
+  },
+  "repository": "https://github.com/bee-queue/arena.git",
+  "version": "2.2.1"
+}
