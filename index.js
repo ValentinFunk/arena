@@ -34,7 +34,6 @@ function run(config, listenOpts = {}) {
     request(`${API_URL}/deployer/queues`, {qs: {
       apiKey: API_KEY
     }, json: true}).then(queueNames => {
-      console.log(queueNames, typeof queueNames);
       const queues = queueNames.map(name => ({
         type: 'bee',
         name,
