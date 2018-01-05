@@ -60,6 +60,22 @@ function run(config, listenOpts = {}) {
   return app;
 }
 
-if (require.main === module) run(null, {basePath: PATH_PREFIX});
+if (require.main === module) {
+  const port = process.env.PORT || 4567;
+  const app = express();
+  app.get('/', (req, res) => res.status(200).send('OK'));
+  
+  const app2 = run(null, {port, basePath: PATH_PREFIX, disableListen: true});
+  app.use((req, res, next) => {
+    console.log(req.url);
+    next();
+  });
+  
+  app.use((req, res) => { 
+    console.log("2", req.url);
+    app2(req, res);
+  });
+  app.listen(port, () => console.log(`Arena is running on port ${port}`));
+}
 
 module.exports = run;
